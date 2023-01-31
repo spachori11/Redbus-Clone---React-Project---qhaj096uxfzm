@@ -4,19 +4,26 @@ export const BusCard = ({ show }) => {
   //   localStorage.getItem("ticketPrice")
   // );
   let seatArr = [];
+  var count = 0;
+  
   const handleClick = (e) => {
     if (!seatArr.includes(e.target.id)) {
       seatArr.push(e.target.id);
       document.getElementById(e.target.id).style.backgroundColor = "red";
+      count = count+1;
       console.log(e.target.id);
     } else {
       seatArr.pop(e.target.id);
       document.getElementById(e.target.id).style.backgroundColor =
-        "rgb(219, 219, 219)";
+      "rgb(219, 219, 219)";
       console.log(e.target.id);
+      count = count-1;
     }
     console.log(seatArr);
   };
+  var handleCount = (e) => {
+    alert(`Booked ${count} seats with ${show.busName} your ticket price is ${count*show.ticketPrice}`);
+  }
   return (
     <>
       {show && show.busName ? (
@@ -146,7 +153,7 @@ export const BusCard = ({ show }) => {
               </div>
             </div>
             <div id="book-ticket">
-              <button type="submit">BOOK TICKET</button>
+              <button onClick={handleCount}  type="submit">BOOK TICKET</button>
             </div>
           </div>
         </div>
