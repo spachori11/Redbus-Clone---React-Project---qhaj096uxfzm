@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const BusDetails = ({ filter, data, data2, setShow }) => {
@@ -8,6 +8,16 @@ export const BusDetails = ({ filter, data, data2, setShow }) => {
   // );
   // console.log(filter.map((ticket) => ticket.ticketPrice));
   const navigate = useNavigate();
+  const [sortCriteria, setSortCriteria] = useState("price");
+  const handleSortCriteriaChange = (e) => {
+    setSortCriteria(e.target.value);
+  };
+  var sortedFilter = [...filter].sort((a, b) => {
+    if(sortCriteria === "price"){
+      return a.ticketPrice - b.ticketPrice;
+    };
+  
+  })
   return (
     <div id="bus-details">
       <div id="sortby">
@@ -25,14 +35,16 @@ export const BusDetails = ({ filter, data, data2, setShow }) => {
             <h3>Arrival</h3>
           </div>
           <div id="schedule">
-            <h3>Price</h3>
+            
+            <h3 onChange={handleSortCriteriaChange} value={sortCriteria} >Price</h3>
+              
+          
           </div>
         </div>
       </div>
 
       <div id="bus-layer">
-        {filter &&
-          filter.map((user, index) => (
+        {sortedFilter.map((user, index) => (
             <div
               id="bus-list"
               onClick={() => {
